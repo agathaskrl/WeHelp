@@ -4,7 +4,7 @@
 
 ## Software Engineering Project 2021-2022 of Computer Engineering and Informatics Department, University of Patras
 
-### Team Members
+### Team Members:
 
 - Ζύμνης Μάρκελλος 
 - Παπαζαχαρία Εμμανουέλα 
