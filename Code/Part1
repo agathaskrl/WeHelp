@@ -1,1 +1,131 @@
+from kivy.lang import Builder
+from kivymd.app import MDApp
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDFlatButton
+from kivy.core.window import Window
 
+# set window size
+Window.size=(300,450)
+
+KV=''' #Kivy for only email
+Screen:
+    
+    MDCard:
+        size_hint: None, None
+        size: 300, 450
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        elevation: 10
+        padding: 65
+        spacing: 35
+        orientation: 'vertical'
+        background_color: 0, 0, 0, 0
+        Image:
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            size: self.texture_size[0] / 2, self.texture_size[1] / 2
+            source: 'telos.png'
+            size_hint: None, None  
+        MDTextFieldRound:
+            id: user
+            icon_left: "email"
+            hint_text: "E-mail"
+            background_color: 1, 1, 1, 1
+            size_hint_x: None
+            width: 220
+            font_size: 20
+            pos_hint: {"center_x": 0.5}
+        MDFillRoundFlatButton:
+            text: "CHECK MAIL"
+            font_size: 15
+            background_color: 0, 0, 0, 0
+            pos_hint: {"center_x": 0.5}
+            on_press: app.login()
+'''
+
+KV1=''' #kivy for email and password
+Screen:
+    
+    MDCard:
+        size_hint: None, None
+        size: 300, 450
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        elevation: 10
+        padding: 65
+        spacing: 35
+        orientation: 'vertical'
+        background_color: 0, 0, 0, 0
+        Image:
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            size: self.texture_size[0] / 2, self.texture_size[1] / 2
+            source: 'telos.png'
+            size_hint: None, None
+        MDTextFieldRound:
+            id: user
+            icon_left: "email"
+            hint_text: "E-mail"
+            size_hint_x: None
+            width: 220
+            font_size: 20
+            pos_hint: {"center_x": 0.5}
+            background_color: 1, 1, 1, 1
+        MDTextFieldRound:
+            id: password
+            icon_left: "lock"
+            hint_text: "Password"
+            size_hint_x: None
+            width: 220
+            font_size: 20            
+            pos_hint: {"center_x": 0.5}
+            background_color: 1, 1, 1, 1
+            password: True
+        MDFillRoundFlatButton:
+            text: "LOG IN"
+            font_size: 15
+            background_color: 0, 0, 0, 0
+            pos_hint: {"center_x": 0.5}
+            on_press: app.login()
+'''
+
+
+class WeHelp(MDApp): #class I think we should have log in here im not sure we'll see
+    dialog = None
+    def build(self):
+        # define theme colors
+
+         #load and return kv string #theme for kivy and colors
+        self.theme_cls.theme_style = "Light"
+        self.theme_cls.primary_palette = "Gray"
+        self.theme_cls.accent_palette = "BlueGray"
+        return Builder.load_string(KV)
+
+    def check_mail(self):  #does not work if we had a base idk
+        if self.mail is True: #Checks if this mail is registered from  SQL base
+         #load and return kv string
+          self.theme_cls.theme_style = "Light"
+          self.theme_cls.primary_palette = "Gray"
+          self.theme_cls.accent_palette = "BlueGray"
+          return Builder.load_string(KV1)
+        else: #else prints message
+          print('This E-mail is not registered.') 
+
+
+
+    def login(self):
+            if  self.dialog:
+                # create dialog
+                self.dialog = MDDialog(
+                    title="Log In",
+                    text=f"Welcome!",
+                    buttons=[
+                        MDFlatButton(
+                            text="Ok", text_color="Dark",
+                            on_release=self.close
+                        ),
+                    ],
+                )
+            # open and display dialog
+            self.dialog.open()
+    def close(self, instance):
+        # close dialog
+        self.dialog.dismiss()
+#Run WeHelp    
+WeHelp().run()
